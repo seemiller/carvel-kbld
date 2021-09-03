@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"sort"
+
+	"sigs.k8s.io/yaml"
 )
 
 type UnprocessedImageURL struct {
@@ -32,4 +34,8 @@ func (i *UnprocessedImageURLs) All() []UnprocessedImageURL {
 		return result[i].URL < result[j].URL
 	})
 	return result
+}
+
+func (i *UnprocessedImageURLs) Bytes() ([]byte, error) {
+	return yaml.Marshal(i.All())
 }
